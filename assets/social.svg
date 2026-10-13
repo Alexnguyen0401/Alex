@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+  <rect width="900" height="520" fill="#f6d3df"/>
+  <g fill="none" stroke="#2f5cff" stroke-width="10">
+    <rect x="80" y="90" width="740" height="340" rx="10"/>
+    <path d="M120 150h240l40 50h380"/>
+  </g>
+  <text x="450" y="300" text-anchor="middle" font-family="monospace" font-size="64" font-weight="700" fill="#2f5cff">SOCIAL</text>
+  <text x="450" y="355" text-anchor="middle" font-family="monospace" font-size="26" fill="#2f5cff">replace this thumbnail</text>
+</svg>

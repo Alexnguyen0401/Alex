@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Nguyen — Video Creator Portfolio</title>
+  <meta name="description" content="Alex Nguyen — Video Creator / Editor portfolio" />
+
+  <!-- Pixel headline font. If you want zero external dependencies, remove this line.
+       The site will fall back to a system monospace font. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="paper-noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" data-nav="home" aria-label="Back to home">
+      <span class="pixel-folder mini" aria-hidden="true"></span>
+      <span>ALEX NGUYEN</span>
+      <span class="chev">›</span>
+    </a>
+
+    <nav class="nav-tabs" aria-label="Primary navigation">
+      <button class="nav-tab active" data-nav="home">⌂ <span>HOME</span></button>
+      <button class="nav-tab" data-scroll="work">▣ <span>WORK</span></button>
+      <button class="nav-tab" data-open-experience>□ <span>EXPERIENCE</span></button>
+      <a class="nav-tab" href="mailto:alexnguyen.stv@gmail.com">✉ <span>CONTACT</span></a>
+    </nav>
+
+    <div class="role-chip">VIDEO CREATOR<br>FREELANCE</div>
+  </header>
+
+  <main>
+    <section id="homeView" class="view active">
+      <section class="hero shell">
+        <div class="hero-copy">
+          <div class="eyebrow">VIDEO EDITOR / DIGITAL ARCHIVE</div>
+          <h1>MY CREATIVE<br>FILES</h1>
+          <p class="tagline">I edit videos into stories people remember.</p>
+          <p class="subline">Social • Head Talk • Event Recap • Documentary</p>
+        </div>
+
+        <div class="hero-visual" aria-label="Alex Nguyen portrait with portfolio folders">
+          <div class="folder-stack stack-4"></div>
+          <div class="folder-stack stack-3"></div>
+          <div class="folder-stack stack-2"></div>
+          <div class="folder-stack stack-1"></div>
+
+          <div class="portrait-card">
+            <!-- =========================================================
+                 CHANGE AVATAR HERE
+                 Replace assets/alex-portrait.png with your new image,
+                 OR change the src below to another file path.
+                 ========================================================= -->
+            <img src="assets/alex-portrait.png" alt="Alex Nguyen portrait" />
+            <div class="portrait-caption">ALEX :)</div>
+          </div>
+
+          <div class="folder-menu">
+            <button data-folder="social">📁 SOCIAL <span>›</span></button>
+            <button data-folder="head-talk">📁 HEAD TALK <span>›</span></button>
+            <button data-folder="event-recap">📁 EVENT RECAP <span>›</span></button>
+            <button data-folder="documentary">📁 DOCUMENTARY <span>›</span></button>
+          </div>
+
+          <div class="scribble note-1">Good videos<br>Better stories ↗</div>
+          <div class="scribble note-2">different projects<br>same passion :)</div>
+        </div>
+      </section>
+
+      <section class="projects shell" id="work">
+        <div class="section-title-row">
+          <h2><span class="pixel-folder"></span> SELECTED PROJECTS</h2>
+          <span class="line"></span>
+          <span class="microcopy">open a folder →</span>
+        </div>
+
+        <div class="folder-grid">
+          <!-- =========================================================
+               CHANGE THE 4 HOME FOLDER THUMBNAILS HERE
+               Change each <img src="..."> path below.
+               Recommended ratio: 16:9, at least 1200×675.
+               ========================================================= -->
+
+          <article class="project-card" data-folder="social">
+            <div class="tab-label">SOCIAL</div>
+            <img src="assets/social.svg" alt="Social projects thumbnail" />
+            <div class="card-bottom">
+              <strong>Social Content</strong>
+              <span>Reels · TikTok · Shorts</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-folder="head-talk">
+            <div class="tab-label">HEAD TALK</div>
+            <img src="assets/head-talk.svg" alt="Head talk thumbnail" />
+            <div class="card-bottom">
+              <strong>Head Talk</strong>
+              <span>Interview · Talking Head</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-folder="event-recap">
+            <div class="tab-label">EVENT RECAP</div>
+            <img src="assets/event-recap.svg" alt="Event recap thumbnail" />
+            <div class="card-bottom">
+              <strong>Event Recap</strong>
+              <span>Event · Highlight · Recap</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-folder="documentary">
+            <div class="tab-label">DOCUMENTARY</div>
+            <img src="assets/documentary.svg" alt="Documentary thumbnail" />
+            <div class="card-bottom">
+              <strong>Documentary</strong>
+              <span>Story · People · Culture</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="about-strip shell">
+        <div>
+          <span class="tiny-label">ABOUT</span>
+          <h3>Alex Nguyen</h3>
+          <p>Video creator focused on clear storytelling, clean pacing and memorable visual rhythm.</p>
+        </div>
+        <button class="experience-cta" data-open-experience>
+          <span>VIEW MORE</span>
+          <strong>Experience & background</strong>
+          <span class="arrow">↗</span>
+        </button>
+      </section>
+    </section>
+
+    <section id="folderView" class="view folder-view">
+      <div class="shell">
+        <div class="folder-toolbar">
+          <button class="back-btn" data-nav="home">← BACK</button>
+          <div class="folder-switcher" id="folderSwitcher"></div>
+        </div>
+
+        <div class="folder-heading">
+          <span class="pixel-folder"></span>
+          <div>
+            <p class="eyebrow">OPEN FOLDER</p>
+            <h2 id="folderTitle">SOCIAL</h2>
+          </div>
+        </div>
+
+        <div class="video-grid" id="videoGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="experience-panel" id="experiencePanel" aria-hidden="true">
+    <button class="panel-close" data-close-experience aria-label="Close">×</button>
+    <p class="eyebrow">MORE ABOUT ALEX</p>
+    <h2>Experience</h2>
+
+    <div class="xp-block">
+      <span class="xp-date">10/2023 — 10/2024</span>
+      <h3>Vzone Media</h3>
+      <p>Video Creator / Assistant Camera</p>
+      <ul>
+        <li>Set up production gear and lighting.</li>
+        <li>Edited short-form scripts and recap content.</li>
+        <li>Supported livestream production workflows.</li>
+      </ul>
+    </div>
+
+    <div class="xp-block">
+      <span class="xp-date">08/2024 — NOW</span>
+      <h3>O6 Studio</h3>
+      <p>Livestream Technician</p>
+      <ul>
+        <li>Set up livestream sessions for clients.</li>
+        <li>Technical support and troubleshooting.</li>
+      </ul>
+    </div>
+
+    <div class="xp-block">
+      <span class="xp-date">05/2025 — 07/2026</span>
+      <h3>Global Ecokids</h3>
+      <p>Video Editor</p>
+      <ul>
+        <li>Shot and edited event, sales and branding clips.</li>
+        <li>Created recap edits and social-ready cutdowns.</li>
+      </ul>
+    </div>
+
+    <div class="xp-block">
+      <span class="xp-date">EDUCATION</span>
+      <h3>University of Economics Ho Chi Minh City</h3>
+      <p>Business English · GPA 8.00</p>
+    </div>
+  </aside>
+  <div class="panel-backdrop" id="panelBackdrop" data-close-experience></div>
+
+  <footer class="footer shell">
+    <span>© <span id="year"></span> ALEX NGUYEN</span>
+    <a href="mailto:alexnguyen.stv@gmail.com">alexnguyen.stv@gmail.com</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
