@@ -27,8 +27,8 @@ const folders = {
         // =====================================================
         video: "https://www.facebook.com/reel/123456789"
       },
-      { title: "Social Project 02", note: "Product / lifestyle", video: "" },
-      { title: "Social Project 03", note: "Campaign cutdown", video: "" }
+      { title: "Social Project 02", note: "Product / lifestyle", video: "https://www.youtube.com/watch?v=xikHksGsh1I" },
+      { title: "Social Project 03", note: "Campaign cutdown", video: "https://www.youtube.com/watch?v=xikHksGsh1I" }
     ]
   },
 
