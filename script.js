@@ -25,7 +25,7 @@ const folders = {
         // Facebook video/reel must be PUBLIC and allow embedding.
         // Leave blank ("") to show a placeholder.
         // =====================================================
-        video: ""
+        video: "https://www.facebook.com/reel/123456789"
       },
       { title: "Social Project 02", note: "Product / lifestyle", video: "" },
       { title: "Social Project 03", note: "Campaign cutdown", video: "" }
