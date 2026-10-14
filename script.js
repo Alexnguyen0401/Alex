@@ -9,9 +9,9 @@ const folders = {
   social: {
     title: "SOCIAL",
     videos: [
-      { title: "Social Project 01", note: "Reels / TikTok / Short-form", video: "" },
-      { title: "Social Project 02", note: "Product / lifestyle", video: "" },
-      { title: "Social Project 03", note: "Campaign cutdown", video: "" }
+      { title: "Social Project 01", note: "Reels / TikTok / Short-form", video: "https://youtube.com/shorts/Esx9Q-nXcuA" },
+      { title: "Social Project 02", note: "Reels / TikTok / Short-form", video: "https://youtube.com/shorts/TW-Ar-gkUb4" },
+      { title: "Social Project 03", note: "Product / lifestyle", video: "https://youtube.com/shorts/Esx9Q-nXcuA" }
     ]
   },
 
