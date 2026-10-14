@@ -1,6 +1,6 @@
 // ============================================================
-// PORTFOLIO DATA
-// This is the main place you will edit later.
+// VIDEO DATA
+// Paste either a YOUTUBE or FACEBOOK link into "video".
 // ============================================================
 
 const folders = {
@@ -10,53 +10,52 @@ const folders = {
       {
         title: "Social Project 01",
         note: "Reels / TikTok / Short-form",
+
         // =====================================================
-        // CHANGE YOUTUBE LINK HERE
-        // Paste a normal YouTube URL, for example:
-        // https://www.youtube.com/watch?v=dQw4w9WgXcQ
-        // Leave it blank ("") to show a placeholder.
+        // CHANGE VIDEO LINK HERE
+        // YouTube examples:
+        // https://www.youtube.com/watch?v=VIDEO_ID
+        // https://youtu.be/VIDEO_ID
+        // https://www.youtube.com/shorts/VIDEO_ID
+        //
+        // Facebook examples:
+        // https://www.facebook.com/.../videos/...
+        // https://www.facebook.com/reel/...
+        //
+        // Facebook video/reel must be PUBLIC and allow embedding.
+        // Leave blank ("") to show a placeholder.
         // =====================================================
-        youtube: "https://www.youtube.com/watch?v=xikHksGsh1I"
+        video: ""
       },
-      {
-        title: "Social Project 02",
-        note: "Product / lifestyle",
-        // CHANGE YOUTUBE LINK HERE
-        video: "https://www.facebook.com/reel/1248756890410844"
-      },
-      {
-        title: "Social Project 03",
-        note: "Campaign cutdown",
-        // CHANGE YOUTUBE LINK HERE
-        youtube: ""
-      }
+      { title: "Social Project 02", note: "Product / lifestyle", video: "" },
+      { title: "Social Project 03", note: "Campaign cutdown", video: "" }
     ]
   },
 
   "head-talk": {
     title: "HEAD TALK",
     videos: [
-      { title: "Head Talk 01", note: "Interview / Talking head", youtube: "" }, // CHANGE YOUTUBE LINK HERE
-      { title: "Head Talk 02", note: "Founder / Personal brand", youtube: "" }, // CHANGE YOUTUBE LINK HERE
-      { title: "Head Talk 03", note: "Educational content", youtube: "" } // CHANGE YOUTUBE LINK HERE
+      { title: "Head Talk 01", note: "Interview / Talking head", video: "" },
+      { title: "Head Talk 02", note: "Founder / Personal brand", video: "" },
+      { title: "Head Talk 03", note: "Educational content", video: "" }
     ]
   },
 
   "event-recap": {
     title: "EVENT RECAP",
     videos: [
-      { title: "Event Recap 01", note: "Highlight edit", youtube: "" }, // CHANGE YOUTUBE LINK HERE
-      { title: "Event Recap 02", note: "Brand event", youtube: "" }, // CHANGE YOUTUBE LINK HERE
-      { title: "Event Recap 03", note: "Community event", youtube: "" } // CHANGE YOUTUBE LINK HERE
+      { title: "Event Recap 01", note: "Highlight edit", video: "" },
+      { title: "Event Recap 02", note: "Brand event", video: "" },
+      { title: "Event Recap 03", note: "Community event", video: "" }
     ]
   },
 
   documentary: {
     title: "DOCUMENTARY",
     videos: [
-      { title: "Documentary 01", note: "People / story", youtube: "" }, // CHANGE YOUTUBE LINK HERE
-      { title: "Documentary 02", note: "Culture / place", youtube: "" }, // CHANGE YOUTUBE LINK HERE
-      { title: "Documentary 03", note: "Short documentary", youtube: "" } // CHANGE YOUTUBE LINK HERE
+      { title: "Documentary 01", note: "People / story", video: "" },
+      { title: "Documentary 02", note: "Culture / place", video: "" },
+      { title: "Documentary 03", note: "Short documentary", video: "" }
     ]
   }
 };
@@ -67,23 +66,116 @@ const folderTitle = document.getElementById("folderTitle");
 const videoGrid = document.getElementById("videoGrid");
 const folderSwitcher = document.getElementById("folderSwitcher");
 
-function youtubeEmbed(url) {
-  if (!url) return "";
-  try {
-    const parsed = new URL(url);
-    let id = "";
-
-    if (parsed.hostname.includes("youtu.be")) {
-      id = parsed.pathname.replace("/", "");
-    } else if (parsed.pathname.includes("/shorts/")) {
-      id = parsed.pathname.split("/shorts/")[1].split("/")[0];
-    } else {
-      id = parsed.searchParams.get("v") || "";
-    }
-    return id ? `https://www.youtube.com/embed/${id}` : "";
-  } catch {
-    return "";
+function getVideoEmbed(url) {
+  if (!url || !url.trim()) {
+    return { type: "empty", embed: "", original: "" };
   }
+
+  const original = url.trim();
+
+  try {
+    const parsed = new URL(original);
+    const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+
+    // YOUTUBE
+    if (host === "youtube.com" || host === "m.youtube.com" || host === "youtu.be") {
+      let id = "";
+
+      if (host === "youtu.be") {
+        id = parsed.pathname.split("/").filter(Boolean)[0] || "";
+      } else if (parsed.pathname.startsWith("/shorts/")) {
+        id = parsed.pathname.split("/shorts/")[1]?.split("/")[0] || "";
+      } else if (parsed.pathname.startsWith("/embed/")) {
+        id = parsed.pathname.split("/embed/")[1]?.split("/")[0] || "";
+      } else {
+        id = parsed.searchParams.get("v") || "";
+      }
+
+      if (id) {
+        return {
+          type: "youtube",
+          embed: `https://www.youtube.com/embed/${id}`,
+          original
+        };
+      }
+    }
+
+    // FACEBOOK
+    if (host === "facebook.com" || host === "m.facebook.com" || host === "fb.watch") {
+      return {
+        type: "facebook",
+        embed:
+          "https://www.facebook.com/plugins/video.php" +
+          `?href=${encodeURIComponent(original)}` +
+          "&show_text=false&width=1280",
+        original
+      };
+    }
+
+    return { type: "unsupported", embed: "", original };
+  } catch {
+    return { type: "unsupported", embed: "", original };
+  }
+}
+
+function renderVideo(video) {
+  // Supports new "video:" field and old "youtube:" field.
+  const sourceUrl = video.video || video.youtube || "";
+  const media = getVideoEmbed(sourceUrl);
+
+  if (media.type === "youtube") {
+    return `
+      <iframe
+        src="${media.embed}"
+        title="${video.title}"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    `;
+  }
+
+  if (media.type === "facebook") {
+    return `
+      <iframe
+        src="${media.embed}"
+        title="${video.title}"
+        loading="lazy"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    `;
+  }
+
+  if (media.type === "unsupported") {
+    return `
+      <div class="video-placeholder">
+        <div>
+          <strong>VIDEO LINK NOT EMBEDDABLE</strong>
+          <p style="margin:14px 0 0;font-size:12px;line-height:1.6">
+            This link cannot be embedded automatically.
+          </p>
+          <a
+            href="${media.original}"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="display:inline-block;margin-top:15px;border:2px solid currentColor;padding:9px 12px;text-decoration:none;font-weight:700"
+          >
+            OPEN VIDEO ↗
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="video-placeholder">
+      <strong>VIDEO<br>COMING SOON</strong>
+    </div>
+  `;
 }
 
 function renderFolder(key) {
@@ -100,27 +192,17 @@ function renderFolder(key) {
     </button>
   `).join("");
 
-  videoGrid.innerHTML = data.videos.map(video => {
-    const embed = youtubeEmbed(video.youtube);
-    return `
-      <article class="video-card">
-        <div class="video-frame">
-          ${embed
-            ? `<iframe src="${embed}" title="${video.title}" loading="lazy"
-                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                 allowfullscreen></iframe>`
-            : `<div class="video-placeholder">
-                 <strong>YOUTUBE VIDEO<br>COMING SOON</strong>
-               </div>`
-          }
-        </div>
-        <div class="video-meta">
-          <h3>${video.title}</h3>
-          <p>${video.note}</p>
-        </div>
-      </article>
-    `;
-  }).join("");
+  videoGrid.innerHTML = data.videos.map(video => `
+    <article class="video-card">
+      <div class="video-frame">
+        ${renderVideo(video)}
+      </div>
+      <div class="video-meta">
+        <h3>${video.title}</h3>
+        <p>${video.note}</p>
+      </div>
+    </article>
+  `).join("");
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -161,14 +243,22 @@ function openExperience() {
   experiencePanel.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
+
 function closeExperience() {
   experiencePanel.classList.remove("open");
   panelBackdrop.classList.remove("open");
   experiencePanel.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 }
-document.querySelectorAll("[data-open-experience]").forEach(el => el.addEventListener("click", openExperience));
-document.querySelectorAll("[data-close-experience]").forEach(el => el.addEventListener("click", closeExperience));
+
+document.querySelectorAll("[data-open-experience]").forEach(el =>
+  el.addEventListener("click", openExperience)
+);
+
+document.querySelectorAll("[data-close-experience]").forEach(el =>
+  el.addEventListener("click", closeExperience)
+);
+
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeExperience();
 });
