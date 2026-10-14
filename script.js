@@ -22,7 +22,7 @@ const folders = {
         title: "Social Project 02",
         note: "Product / lifestyle",
         // CHANGE YOUTUBE LINK HERE
-        youtube: ""
+        youtube: " https://www.youtube.com/watch?v=xikHksGsh1I "
       },
       {
         title: "Social Project 03",
