@@ -1,34 +1,17 @@
 // ============================================================
-// VIDEO DATA
-// Paste either a YOUTUBE or FACEBOOK link into "video".
+// PORTFOLIO DATA
+// YouTube + Facebook supported.
+// Social + Head Talk = vertical 9:16
+// Event Recap + Documentary = horizontal 16:9
 // ============================================================
 
 const folders = {
   social: {
     title: "SOCIAL",
     videos: [
-      {
-        title: "Social Project 01",
-        note: "Reels / TikTok / Short-form",
-
-        // =====================================================
-        // CHANGE VIDEO LINK HERE
-        // YouTube examples:
-        // https://www.youtube.com/watch?v=VIDEO_ID
-        // https://youtu.be/VIDEO_ID
-        // https://www.youtube.com/shorts/VIDEO_ID
-        //
-        // Facebook examples:
-        // https://www.facebook.com/.../videos/...
-        // https://www.facebook.com/reel/...
-        //
-        // Facebook video/reel must be PUBLIC and allow embedding.
-        // Leave blank ("") to show a placeholder.
-        // =====================================================
-        video: "https://www.facebook.com/reel/1248756890410844"
-      },
-      { title: "Social Project 02", note: "Product / lifestyle", video: "https://www.youtube.com/watch?v=xikHksGsh1I" },
-      { title: "Social Project 03", note: "Campaign cutdown", video: "https://www.youtube.com/watch?v=xikHksGsh1I" }
+      { title: "Social Project 01", note: "Reels / TikTok / Short-form", video: "" },
+      { title: "Social Project 02", note: "Product / lifestyle", video: "" },
+      { title: "Social Project 03", note: "Campaign cutdown", video: "" }
     ]
   },
 
@@ -67,9 +50,7 @@ const videoGrid = document.getElementById("videoGrid");
 const folderSwitcher = document.getElementById("folderSwitcher");
 
 function getVideoEmbed(url) {
-  if (!url || !url.trim()) {
-    return { type: "empty", embed: "", original: "" };
-  }
+  if (!url || !url.trim()) return { type: "empty", embed: "", original: "" };
 
   const original = url.trim();
 
@@ -77,7 +58,6 @@ function getVideoEmbed(url) {
     const parsed = new URL(original);
     const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
 
-    // YOUTUBE
     if (host === "youtube.com" || host === "m.youtube.com" || host === "youtu.be") {
       let id = "";
 
@@ -100,7 +80,6 @@ function getVideoEmbed(url) {
       }
     }
 
-    // FACEBOOK
     if (host === "facebook.com" || host === "m.facebook.com" || host === "fb.watch") {
       return {
         type: "facebook",
@@ -119,7 +98,6 @@ function getVideoEmbed(url) {
 }
 
 function renderVideo(video) {
-  // Supports new "video:" field and old "youtube:" field.
   const sourceUrl = video.video || video.youtube || "";
   const media = getVideoEmbed(sourceUrl);
 
@@ -158,12 +136,8 @@ function renderVideo(video) {
           <p style="margin:14px 0 0;font-size:12px;line-height:1.6">
             This link cannot be embedded automatically.
           </p>
-          <a
-            href="${media.original}"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="display:inline-block;margin-top:15px;border:2px solid currentColor;padding:9px 12px;text-decoration:none;font-weight:700"
-          >
+          <a href="${media.original}" target="_blank" rel="noopener noreferrer"
+             style="display:inline-block;margin-top:15px;border:2px solid currentColor;padding:9px 12px;text-decoration:none;font-weight:700">
             OPEN VIDEO ↗
           </a>
         </div>
@@ -182,9 +156,14 @@ function renderFolder(key) {
   const data = folders[key];
   if (!data) return;
 
+  const isVertical = key === "social" || key === "head-talk";
+
   homeView.classList.remove("active");
   folderView.classList.add("active");
   folderTitle.textContent = data.title;
+
+  videoGrid.classList.toggle("vertical-grid", isVertical);
+  videoGrid.classList.toggle("horizontal-grid", !isVertical);
 
   folderSwitcher.innerHTML = Object.entries(folders).map(([folderKey, folder]) => `
     <button class="${folderKey === key ? "active" : ""}" data-folder="${folderKey}">
@@ -193,8 +172,8 @@ function renderFolder(key) {
   `).join("");
 
   videoGrid.innerHTML = data.videos.map(video => `
-    <article class="video-card">
-      <div class="video-frame">
+    <article class="video-card ${isVertical ? "vertical-card" : "horizontal-card"}">
+      <div class="video-frame ${isVertical ? "vertical-frame" : "horizontal-frame"}">
         ${renderVideo(video)}
       </div>
       <div class="video-meta">
@@ -210,6 +189,7 @@ function renderFolder(key) {
 function goHome() {
   folderView.classList.remove("active");
   homeView.classList.add("active");
+  videoGrid.classList.remove("vertical-grid", "horizontal-grid");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -233,7 +213,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// Experience panel
 const experiencePanel = document.getElementById("experiencePanel");
 const panelBackdrop = document.getElementById("panelBackdrop");
 
