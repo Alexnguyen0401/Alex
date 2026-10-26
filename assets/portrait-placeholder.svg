@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#b9d8ff"/><stop offset="1" stop-color="#eef6ff"/></linearGradient></defs>
+<rect width="480" height="640" fill="url(#bg)"/><circle cx="240" cy="205" r="95" fill="#f0c7aa"/><path d="M145 205 Q130 80 240 85 Q350 85 335 210 L310 170 Q265 150 225 150 Q190 180 145 205" fill="#183b68"/><path d="M90 640 Q90 380 240 370 Q390 380 390 640" fill="#174b91"/><path d="M175 385 L240 470 L305 385" fill="#f6fbff"/><text x="240" y="590" font-family="monospace" font-size="20" text-anchor="middle" fill="#123e99">YOUR PHOTO HERE</text>
+</svg>
